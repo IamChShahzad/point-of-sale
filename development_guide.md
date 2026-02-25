@@ -1,108 +1,67 @@
-# Development Guide - POS Payment Gateway
+# 📘 Development Guide - Retail POS System
 
-Welcome to the POS Payment Gateway project development guide. This document provides an overview of the system architecture, setup instructions, and guidance for developers.
-
-## 🚀 Project Overview
-
-This is a Retail Point of Sale (POS) system built with Python using the Kivy and KivyMD frameworks. It integrates with the SPIn payment gateway for processing credit and EBT transactions and supports ESC/POS thermal printers.
-
-### Tech Stack
-- **Language:** Python 3.x
-- **UI Framework:** [Kivy](https://kivy.org/) & [KivyMD](https://kivymd.readthedocs.io/)
-- **Database:** SQLite3
-- **Data Handling:** Pandas
-- **Printing:** `python-escpos`
-- **Payment Gateway:** SPIn API (REST)
+Welcome to the development guide for the Retail POS System. This document provides technical insights into the architecture, state management, and guidance for extending the system's functionality.
 
 ---
 
-## 📁 Project Structure
+## 🏗️ System Architecture
 
-```bash
-pos-payment_gateway/
-├── main.py              # Application entry point & Screen switcher
-├── mainFunc.py          # Core business logic (Printing, Shifts, Receipts)
-├── posapp.kv            # Kivy layout file (UI declarations)
-├── requirements.txt     # Python dependencies
-├── variable.txt         # Persistent state (Store info, Printers, Shifts)
-├── databaseScripts/      # SQLite database management
-│   ├── inventory.py     # Inventory CRUD operations
-│   ├── shifts.py        # Shift tracking logic
-│   └── transactions.py  # Transaction storage
-├── kivyScripts/         # UI Screen implementations
-│   ├── retailScreen.py  # Main POS transaction screen
-│   ├── inventoryScreen.py # Inventory management UI
-│   └── payment_gateway.py # SPIn API integration
-└── data/                # SQLite database files (.db)
-```
+The project is structured with a modular approach to separate core concerns, following a controller-like pattern where `src/core/logic.py` mediates between the UI and data persistence.
+
+### 🖼️ Presentation Layer (`src/ui/`)
+- Handles all user-facing interactions.
+- Built using **Kivy** for the application engine and **KivyMD** for a modern, Material Design aesthetic.
+- Screens are managed by the `ScreenManager` (defined in `src/ui/screenManager.py`).
+
+### ⚙️ Business Logic (`src/core/`)
+- `logic.py` contains the core functional workflows such as generating receipts, ending shifts, and managing the application's persistent state.
+- Handles hardware communication (Thermal Printer via ESC/POS).
+
+### 🗄️ Persistence Layer (`src/database/`)
+- Encapsulates interaction with SQLite3 databases.
+- Modules such as `inventory.py`, `shifts.py`, and `transactions.py` provide a clean API for CRUD operations, insulating the rest of the app from raw SQL logic.
 
 ---
 
-## 🛠️ Setup & Installation
+## 💾 State & Configuration
 
-### 1. Prerequisites
-- Python 3.8+
-- USB Thermal Printer (Optional, for testing printing)
-- SPIn TPN and Auth Key (For payment processing)
+### 1. Global State (`variable.txt`)
+The application uses a persistent file `variable.txt` to store runtime configuration. This enables the system to recover its state (e.g., store info, current shift, printer IDs) after a restart.
 
-### 2. Environment Setup
-```bash
-# Clone the repository
-git clone <repo-url>
-cd pos-payment_gateway
+- **`data`**: Store metadata (Name, Address, Phone).
+- **`shift`**: Tracking for the current active shift.
+- **`tabs`**: Configuration for quick-access retail buttons.
+- **`printerSettings`**: USB Vendor and Product IDs for the hardware connection.
 
-# Install dependencies
-pip install -r requirements.txt
-```
-
-### 3. Configuration
-The system uses a `.env` file for sensitive credentials (ensure this is created based on `.env.example` if applicable) and `variable.txt` for runtime configuration.
+### 2. Databases (`data/`)
+SQLite databases are used for local data storage:
+- `inventory.db`: Tracks products, categories, tax, and stock.
+- `transactions.db`: Historical record of all sales and refunds.
+- `shifts.db`: Detailed logs of shift duration and activities.
 
 ---
 
-## 🧠 Core Logic & Workflows
+## 🛠️ Developer Workflows
 
-### 1. Persistent State (`variable.txt`)
-The application stores its configuration and current shift state in `variable.txt`. This file is read at startup to initialize global dictionaries:
-- `data`: Store information (Name, Address, Phone).
-- `shift`: Current shift details (Number, Start time).
-- `printerSettings`: USB Printer VendorID and ProductID.
+### Adding a New UI Screen
+1. Create a new class inheriting from `Screen` or `MDScreen` in `src/ui/`.
+2. Define the screen's layout in `src/assets/posapp.kv`.
+3. Register the new screen in the `posApp.build` method within `main.py`.
+4. Trigger navigation using `sm.current = "your_screen_name"`.
 
-### 2. Database Management
-Data is stored in `./data/` using SQLite. Key modules in `databaseScripts/` handle table creation and data persistence. 
-- **Inventory:** Managed via `databaseScripts/inventory.py`. Uses `items` and `category` tables.
+### Database Schema Updates
+1. Modify the relevant module in `src/database/`.
+2. Use `CREATE TABLE IF NOT EXISTS` to ensure seamless updates for existing installations.
+3. Update any relevant data models or summary logic in `src/core/logic.py`.
 
-### 3. Payment Processing
-Payment logic resides in `kivyScripts/payment_gateway.py`. It communicates with the SPIn API via HTTP requests. 
-- Supported operations: `credit_sale`, `ebt_cash`, `refund_sale`, `void_sale`, and `settle_batch_out`.
-
-### 4. Printing
-Printing is handled in `mainFunc.py` using the `printer` class. It uses the `escpos` library to send raw commands to USB thermal printers.
-
----
-
-## 🆕 Adding Features
-
-### Adding a New Screen
-1. Create a new Python file in `kivyScripts/` (e.g., `myNewScreen.py`).
-2. Define the screen class inheriting from `Screen`.
-3. Update `main.py` to import and add the new screen to the `ScreenManager` (variable `sm`).
-4. Add the UI layout in `posapp.kv`.
-
-### Database Changes
-1. Modify the relevant script in `databaseScripts/`.
-2. Ensure you handle `CREATE TABLE IF NOT EXISTS` for new tables.
-3. Update `mainFunc.py` if global data mapping is required.
+### Logging & Debugging
+- **Kivy Internal Logs:** Located in `logs/` (configured via `Config.set` in `main.py`).
+- **Application Errors:** Captured manually in `logs/error.log`.
+- **Reset Utility:** The `reset__()` function in `logic.py` can be used to archive current data and re-initialize the environment for testing purposes.
 
 ---
 
-## 📝 Troubleshooting & Logging
-
-- **Kivy Logs:** Saved in `logsKivy/`. Configured in `main.py`.
-- **Application Errors:** Logged to `errorLog`.
-- **Database Issues:** If the database becomes corrupt, you can use the `reset__()` function in `mainFunc.py` to archive the current data and start fresh (Caution: This deletes current transaction data).
-
----
-
-## 📜 License
-This project is licensed under the MIT License - see the `LICENSE` file for details.
+## 🤝 Contribution Guidelines
+- Ensure all new features include appropriate error handling and logging.
+- Maintain the modular structure—keep database logic separate from UI events.
+- Update the `README.md` if existing setup instructions or features change.
