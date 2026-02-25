@@ -9,7 +9,7 @@ __pycache__/
 .env
 
 # Project specific
-data/*.db
+data/
 logs/
 variable.txt
 development_guide.md
