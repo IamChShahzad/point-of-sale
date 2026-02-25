@@ -1,0 +1,4 @@
+\All Transactions Error : 2025-05-03 14:26:51.814793
+addData Params : (datetime.datetime(2025, 5, 3, 14, 26, 51, 799299), datetime.date(2025, 5, 3), '202505031426517', 3, '123', 'Panadol Tablet 500 mg', 'Department_1', 0.0, 9.0, -1, 'Deposit_1', 0, 'Tax_1', 0, 0, 'CASH')
+UNIQUE constraint failed: all_transactions.transaction_id, all_transactions.barcode
+
