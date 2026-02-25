@@ -11,12 +11,12 @@ import random
 from datetime import datetime
 import pandas as pd
 from functools import partial
-import databaseScripts.allTransactions as at
-import databaseScripts.transactions as ts
-import databaseScripts.inventory as inv
-import databaseScripts.shifts as shifts
-from kivyScripts.retailScreen import NumPad
-from mainFunc import * 
+import src.database.allTransactions as at
+import src.database.transactions as ts
+import src.database.inventory as inv
+import src.database.shifts as shifts
+from src.ui.retailScreen import NumPad
+from src.core.logic import * 
 
 class SettingsScreen(MDScreen):
     file_manager = None

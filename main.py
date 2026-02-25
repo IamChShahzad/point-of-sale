@@ -1,27 +1,28 @@
 ######################    Import Kivy Libraries  ###################
-from mainFunc import updateStoreInformation, endShift, shift, printerSettings, printer
-import databaseScripts.shifts as sf
-from kivyScripts.screenManager import sm
-from kivyScripts.settingsScreen import SettingsScreen
-from kivyScripts.retailScreen import RetailScreen,  retailTransactions
-from kivyScripts.retailAdditonalScreens import CashOutScreen, buttonSettings
-from kivyScripts.reportsScreen import ReportsScreen, receiptScreen, currentInventoryScreen
-from kivyScripts.storeScreen import StoreInformation
-from kivyScripts.inventoryScreen import InventoryScreen
+from src.core.logic import updateStoreInformation, endShift, shift, printerSettings, printer
+import src.database.shifts as sf
+from src.ui.screenManager import sm
+from src.ui.settingsScreen import SettingsScreen
+from src.ui.retailScreen import RetailScreen,  retailTransactions
+from src.ui.retailAdditonalScreens import CashOutScreen, buttonSettings
+from src.ui.reportsScreen import ReportsScreen, receiptScreen, currentInventoryScreen
+from src.ui.storeScreen import StoreInformation
+from src.ui.inventoryScreen import InventoryScreen
 from kivymd.uix.label import MDLabel
 from kivymd.app import MDApp
 from kivy.uix.button import Button
 from kivy.uix.screenmanager import Screen, RiseInTransition, NoTransition
 from kivy.clock import Clock
+from kivy.lang import Builder
 import warnings
 from datetime import datetime
 import os
 from kivy.config import Config
-Config.set('kivy', 'log_dir', f"{os.getcwd()}/logsKivy")
+Config.set('kivy', 'log_dir', f"{os.getcwd()}/logs")
 Config.set('kivy', 'log_level', 'info')
 Config.set('kivy', 'log_maxfiles', 50)
 Config.set('kivy', 'exit_on_escape', 0)
-Config.set('kivy', 'window_icon', './images/cash-register-g87e120a86_640.png')
+Config.set('kivy', 'window_icon', 'src/assets/images/cash-register-g87e120a86_640.png')
 # Config.set('graphics','borderless',0)# 1 for making this app only visible
 # Config.set('graphics','fullscreen','auto') # Will us this if running in Main or Second full-screen
 # Config.set('graphics', 'position', 'custom')
@@ -83,6 +84,7 @@ class loginShift(Screen):
 
 class posApp(MDApp):
     def build(self):
+        Builder.load_file('src/assets/posapp.kv')
         self.title = "Retail-POS System"
 
         # sm.add_widget(InventoryScreen(name="inventory"))

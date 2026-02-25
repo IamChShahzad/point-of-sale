@@ -8,9 +8,9 @@ from kivymd.uix.textfield import MDTextField
 from kivymd.uix.dialog import MDDialog
 from kivymd.uix.button import MDRaisedButton, MDFlatButton
 
-from kivyScripts.screenManager import sm, fontsize, Window
+from src.ui.screenManager import sm, fontsize, Window
 
-from mainFunc import data, updateStoreInformation
+from src.core.logic import data, updateStoreInformation
 
 
 

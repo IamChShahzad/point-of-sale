@@ -1,5 +1,5 @@
 import sqlite3
-import databaseScripts.inventory as inventory
+import src.database.inventory as inventory
 from datetime import datetime, timedelta
 
 conn = sqlite3.connect('./data/allTransactions.db')

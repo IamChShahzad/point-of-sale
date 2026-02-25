@@ -49,7 +49,7 @@ def addData(item_name, barcode_number, department, cost_per_piece, sales_price,
         c.execute("INSERT INTO items VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", params)
         conn.commit()
     except Exception as e:
-        with open('errorLog',"a") as file:
+        with open('logs/error.log',"a") as file:
             file.write(f"\nInventory Error : {datetime.now()}\naddData Params : {params}\n{e}\n\n")
     
 
@@ -299,7 +299,7 @@ def addCategoryData(datetime, category, category_id,category_name,value):
         c.execute("INSERT INTO category VALUES (?, ?, ?, ?, ?)", params)
         conn.commit()
     except Exception as e:
-        with open('errorLog',"a") as file:
+        with open('logs/error.log',"a") as file:
             file.write(f"\nInventory Error : {datetime.now()}\naddData Params : {params}\n{e}\n\n")
 
 def getAllCategoryValue():

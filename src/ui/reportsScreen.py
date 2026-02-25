@@ -13,16 +13,16 @@ from kivymd.uix.button import MDRaisedButton, BaseButton
 from kivymd.uix.selectioncontrol import MDCheckbox
 from kivymd.uix.picker import MDDatePicker
 
-from kivyScripts.screenManager import sm, fontsize, Window
-import databaseScripts.allTransactions as at
-import databaseScripts.transactions as ts
-import databaseScripts.inventory as inv
-import databaseScripts.shifts as shifts
+from src.ui.screenManager import sm, fontsize, Window
+import src.database.allTransactions as at
+import src.database.transactions as ts
+import src.database.inventory as inv
+import src.database.shifts as shifts
 import pandas as pd
 from datetime import datetime
 from functools import partial
 from copy import deepcopy
-from mainFunc import endShift, shift, printer
+from src.core.logic import endShift, shift, printer
 
 class labelgrid(MDRelativeLayout):
     def __init__(self, **kw):

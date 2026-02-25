@@ -1,14 +1,14 @@
-import databaseScripts.inventory as inv
-import databaseScripts.allTransactions as at
-import databaseScripts.transactions as ts
-import databaseScripts.shifts as sf
+import src.database.inventory as inv
+import src.database.allTransactions as at
+import src.database.transactions as ts
+import src.database.shifts as sf
 import sqlite3, os, shutil
 import pandas as pd
 from datetime import datetime
 from escpos.printer import Usb
-from kivyScripts.screenManager import sm
-from kivyScripts.config import TPN, AUTH_KEY
-from kivyScripts.payment_gateway import settle_batch_out
+from src.ui.screenManager import sm
+from src.ui.config import TPN, AUTH_KEY
+from src.ui.payment_gateway import settle_batch_out
 
 global data, tabs, shift,variableButtons, printerSettings
 
@@ -38,36 +38,36 @@ def deleteFilePath(fileNameOrDir,dir=False):
         try:
             shutil.rmtree(fileNameOrDir)
         except Exception as e:
-            with open('errorLog',"a") as file:
+            with open('logs/error.log',"a") as file:
                 file.write(f"\nDeleting Directory Error : {datetime.now()}\n Dir. Path : {fileNameOrDir}\n{e}\n\n")
     else:
         try:
             if os.path.exists(fileNameOrDir):
                 os.remove(fileNameOrDir) 
         except Exception as e:
-            with open('errorLog',"a") as file:
+            with open('logs/error.log',"a") as file:
                 file.write(f"\nDeleting File  Error : {datetime.now()}\n File Path : {fileNameOrDir}\n{e}\n\n")
  
 def reset__():
     try:
         archiveDir = "./archive/"+str(datetime.now()).split('.')[0].replace(" ","_").replace(":","_").replace("-","_")
         shutil.copytree("./data",archiveDir+"/data/")
-        shutil.copytree("./logsKivy",archiveDir+"/logsKivy/")
+        shutil.copytree("./logs",archiveDir+"/logs/")
         shutil.copy2("variable.txt",archiveDir)
-        shutil.copy2("errorLog",archiveDir)
+        shutil.copy2("logs/error.log",archiveDir)
     except Exception as e:
-        with open('errorLog',"a") as file:
+        with open('logs/error.log',"a") as file:
             file.write(f"\nArchiveing Error : {datetime.now()}\n File Dir. : {archiveDir}\n{e}\n\n")
 
     try:
-        deleteFilePath("./logsKivy",dir=True)
+        deleteFilePath("./logs",dir=True)
         deleteFilePath("./data/allTransactions.db")
         deleteFilePath("./data/transactions.db")
         deleteFilePath("./data/shifts.db")
         deleteFilePath("variable.txt")
-        deleteFilePath("errorLog")
+        deleteFilePath("logs/error.log")
     except Exception as e:
-        with open('errorLog',"a") as file:
+        with open('logs/error.log',"a") as file:
             file.write(f"\Reset Error : {datetime.now()}\n{e}\n\n")
     quit()
  

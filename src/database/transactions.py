@@ -1,6 +1,6 @@
 import sqlite3
 from datetime import datetime, timedelta
-import databaseScripts.allTransactions as AT
+import src.database.allTransactions as AT
 
 conn = sqlite3.connect('./data/transactions.db')
 

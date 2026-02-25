@@ -1,7 +1,7 @@
 import random
 import math
-from kivyScripts.payment_gateway import credit_sale, ebt_cash, cash, refund_sale, void_sale
-from kivyScripts.config import TPN, AUTH_KEY, CARD_PERCENTAGE
+from src.ui.payment_gateway import credit_sale, ebt_cash, cash, refund_sale, void_sale
+from src.ui.config import TPN, AUTH_KEY, CARD_PERCENTAGE
 from kivy.metrics import dp, sp
 from kivy.uix.scrollview import ScrollView
 from kivy.uix.button import Button
@@ -18,19 +18,19 @@ from kivymd.uix.button import MDRaisedButton, BaseButton
 from kivymd.uix.selectioncontrol import MDSwitch
 from kivymd.uix.button import MDFlatButton
 
-from kivyScripts.screenManager import sm, fontsize, Window
+from src.ui.screenManager import sm, fontsize, Window
 import uuid
-import databaseScripts.allTransactions as at
-import databaseScripts.transactions as ts
-import databaseScripts.inventory as inv
-import databaseScripts.shifts as shifts
+import src.database.allTransactions as at
+import src.database.transactions as ts
+import src.database.inventory as inv
+import src.database.shifts as shifts
 
 import pandas as pd
 from datetime import datetime
 from functools import partial
 from copy import deepcopy
 
-from mainFunc import * 
+from src.core.logic import * 
 
 
 

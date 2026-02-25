@@ -7,7 +7,7 @@
     name : "login_shift"
 
     Image:
-        source : "images/cash-register-g87e120a86_640.png"
+        source : "src/assets/images/cash-register-g87e120a86_640.png"
         pos_hint : {"x":0,"y":0}
         size_hint : 0.5, 0.8
     
@@ -54,7 +54,7 @@
         Rectangle:
             pos: self.pos
             size: self.size
-            source: 'images/monitor-313011_1920.jpg'
+            source: 'src/assets/images/monitor-313011_1920.jpg'
 
     FloatLayout:
         
@@ -72,7 +72,7 @@
                     spacing : 10
                     padding : [20,50,20,20]
                     Image:
-                        source : "images/register-gc32b1b368_640.png"
+                        source : "src/assets/images/register-gc32b1b368_640.png"
                     Label:
                         text : "Retail POS-Screen"
                         font_size : dp((root.width**2 + root.height**2)**0.25/2.5)
@@ -87,7 +87,7 @@
                     cols :1
                     padding : [20,50,20,20]
                     Image:
-                        source : "images/pack-g5787531aa_640.png"
+                        source : "src/assets/images/pack-g5787531aa_640.png"
                     Label:
                         text: "Inventory"
                         font_size : dp((root.width**2 + root.height**2)**0.25/2.5)
@@ -102,7 +102,7 @@
                     cols :1
                     padding : [20,50,20,20]
                     Image:
-                        source : "images/finance-gac841eb70_640.png"
+                        source : "src/assets/images/finance-gac841eb70_640.png"
                     Label:
                         text: "Reports"
                         font_size : dp((root.width**2 + root.height**2)**0.25/2.5)
@@ -249,7 +249,7 @@
     
     MDIcon:
         icon : "custom"
-        source: "images/clock-g538c12792_640.png"
+        source: "src/assets/images/clock-g538c12792_640.png"
         pos_hint : {"center_x":0.155,"center_y":0.95}
         size_hint : [0.06 , 0.1 ]
         md_bg_color:[0.128,0.128,0.128,0.25]

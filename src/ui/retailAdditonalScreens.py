@@ -9,12 +9,12 @@ from kivymd.uix.textfield import MDTextField
 from kivymd.uix.dialog import MDDialog
 from kivymd.uix.button import MDRaisedButton, MDFillRoundFlatButton
 
-from kivyScripts.screenManager import sm, fontsize, Window
-import databaseScripts.allTransactions as at
-import databaseScripts.transactions as ts
-import databaseScripts.inventory as inv
+from src.ui.screenManager import sm, fontsize, Window
+import src.database.allTransactions as at
+import src.database.transactions as ts
+import src.database.inventory as inv
 
-from mainFunc import * 
+from src.core.logic import * 
 from functools import partial
 
 class buttonSettings(MDScreen):

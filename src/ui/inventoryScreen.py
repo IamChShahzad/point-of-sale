@@ -16,8 +16,8 @@ from kivymd.uix.selectioncontrol import MDSwitch
 from functools import partial
 from datetime import datetime
 
-from kivyScripts.screenManager import sm, fontsize, Window
-import databaseScripts.inventory as inv
+from src.ui.screenManager import sm, fontsize, Window
+import src.database.inventory as inv
 import re
 
 

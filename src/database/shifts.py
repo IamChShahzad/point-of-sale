@@ -23,7 +23,7 @@ def addData(start_date_time,end_date_time,shift_id,shift_Names,endShift_reports)
         c.execute("INSERT INTO shifts VALUES (?, ?, ?, ?, ?)", params)
         conn.commit()
     except Exception as e:
-        with open('errorLog',"a") as file:
+        with open('logs/error.log',"a") as file:
             file.write(f"\nShift Error : {datetime.now()}\naddData Params : {params}\n{e}\n\n")
 
 # obtaining a list of transactions present in the database
@@ -69,7 +69,7 @@ def add_data_C(date_time, shift_id, name, invoice_no, amount):
         c.execute("INSERT INTO CashOut_NoSale VALUES (?, ?, ?, ?, ?)", params)
         conn.commit()
     except Exception as e:
-        with open('errorLog',"a") as file:
+        with open('logs/error.log',"a") as file:
             file.write(f"\nCashOut_NoSale Error : {datetime.now()}\naddData Params : {params}\n{e}\n\n")
 
 def get_data_C():
