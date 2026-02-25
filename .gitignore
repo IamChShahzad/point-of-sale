@@ -1,9 +1,20 @@
+# OS generated files
 .DS_Store
-__pycache__
-*.db
-logsKivy/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+.env
+
+# Project specific
+data/*.db
+logs/
 variable.txt
-.venv
+development_guide.md
+
+# Build and Packaging
 build/
 dist/
-.env
+*.spec
